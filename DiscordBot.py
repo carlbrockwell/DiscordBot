@@ -15,12 +15,12 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Global variable, objects setup"
-TOKEN = input("Welcome to DiscordBot \r Please enter your bot security token:")
-channelId = input(" Please enter the channel ID you want DiscordBot to post notifications to:")
+TOKEN = input("Welcome to DiscordBot\rPlease enter your bot security token:")
+channelId = input("Please enter the channel ID you want DiscordBot to post notifications to:")
 general_channel = discord.Object(channelId)
 bot_description = "[Enter your bot description here]"
 bot = commands.Bot(command_prefix='!', description=bot_description)
-bot_version_number = '3.0'
+bot_version_number = '3.1'
 purge_time_secs = 259200
 non_game_reference_list = ["abc123", "launcher"]  # Reference list on apps to ignore/exclude as a game being played.
 halt = False
@@ -84,8 +84,8 @@ def is_connected(self):
     return self._is_connected(self)
 
 
-# When member enters voice chat for the first time after connecting, move them and the first member
-# found playing the same game (or none ) into their own channel, if they are in voice channels, else do nothing.
+# When member enters voice chat for the first time after connecting, move them and the first member found playing the
+#  same game (or none ) into their own channel, if they are in voice channels, else announce member joining channel.
 @bot.event
 async def on_voice_state_update(before, after):
     if before.voice_channel is None:  # Member is not previously connected to a voice channel.
@@ -99,6 +99,10 @@ async def on_voice_state_update(before, after):
                                        .format(after.mention, member.voice_channel.mention, member.mention,
                                                str(member.game)))
                 break
+
+    if after.voice_channel is not None:
+        await bot.send_message(general_channel, after.mention + " has joined: " + str(after.voice_channel.mention),
+                               tts=True)
 
 
 @bot.event
@@ -182,7 +186,7 @@ async def on_member_update(before, after):
         await bot.send_message(general_channel, nickname_update_string)
 
     # Check member status change and announce it
-    if str(before.status) != str(after.status):
+    if str(before.status) != str(after.status) and after.name != "chrisdafunk":
         await bot.send_message(general_channel, after.mention + " is " + str(after.status), tts=True)
         print(after.name + " is " + str(after.status) + " " + str(datetime.datetime.now()))  # Log task for debugging
 
