@@ -21,7 +21,7 @@ general_channel = discord.Object(channelId)
 bot_description = "[Enter your bot description here]"
 bot = commands.Bot(command_prefix='!', description=bot_description)
 bot_version_number = '3.1'
-purge_time_secs = 259200
+purge_time_secs = 25920
 non_game_reference_list = ["abc123", "launcher"]  # Reference list on apps to ignore/exclude as a game being played.
 halt = False
 
@@ -100,9 +100,9 @@ async def on_voice_state_update(before, after):
                                                str(member.game)))
                 break
 
-    if after.voice_channel is not None:
-        await bot.send_message(general_channel, after.mention + " has joined: " + str(after.voice_channel.mention),
-                               tts=True)
+    # if after.voice_channel is not None:
+    #   await bot.send_message(general_channel, after.mention + " has joined: " + str(after.voice_channel.mention),
+    #                         tts=True)
 
 
 @bot.event
