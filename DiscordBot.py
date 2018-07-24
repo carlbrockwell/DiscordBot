@@ -186,7 +186,7 @@ async def on_member_update(before, after):
         await bot.send_message(general_channel, nickname_update_string)
 
     # Check member status change and announce it
-    if str(before.status) != str(after.status) and after.id != "C. Hall [E-SQN]":
+    if str(before.status) != str(after.status) and after.id != "97028501449748480":
         await bot.send_message(general_channel, after.mention + " is " + str(after.status), tts=True)
         print(after.name + " is " + str(after.status) + " " + str(datetime.datetime.now()))  # Log task for debugging
 
