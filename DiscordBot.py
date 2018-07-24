@@ -21,7 +21,7 @@ general_channel = discord.Object(channelId)
 bot_description = "[Enter your bot description here]"
 bot = commands.Bot(command_prefix='!', description=bot_description)
 bot_version_number = '3.1'
-purge_time_secs = 25920
+purge_time_secs = 259200
 non_game_reference_list = ["abc123", "launcher"]  # Reference list on apps to ignore/exclude as a game being played.
 halt = False
 
@@ -186,7 +186,7 @@ async def on_member_update(before, after):
         await bot.send_message(general_channel, nickname_update_string)
 
     # Check member status change and announce it
-    if str(before.status) != str(after.status) and after.name != "chrisdafunk":
+    if str(before.status) != str(after.status) and after.id != "C. Hall [E-SQN]":
         await bot.send_message(general_channel, after.mention + " is " + str(after.status), tts=True)
         print(after.name + " is " + str(after.status) + " " + str(datetime.datetime.now()))  # Log task for debugging
 
